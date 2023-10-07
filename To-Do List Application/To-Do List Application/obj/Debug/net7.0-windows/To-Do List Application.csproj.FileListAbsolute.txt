@@ -1,0 +1,33 @@
+C:\Users\rgaet\OneDrive\Documents\GitHub\To-Do_List_Application\To-Do List Application\To-Do List Application\bin\Debug\net7.0-windows\To-Do List Application.exe
+C:\Users\rgaet\OneDrive\Documents\GitHub\To-Do_List_Application\To-Do List Application\To-Do List Application\bin\Debug\net7.0-windows\To-Do List Application.deps.json
+C:\Users\rgaet\OneDrive\Documents\GitHub\To-Do_List_Application\To-Do List Application\To-Do List Application\bin\Debug\net7.0-windows\To-Do List Application.runtimeconfig.json
+C:\Users\rgaet\OneDrive\Documents\GitHub\To-Do_List_Application\To-Do List Application\To-Do List Application\bin\Debug\net7.0-windows\To-Do List Application.dll
+C:\Users\rgaet\OneDrive\Documents\GitHub\To-Do_List_Application\To-Do List Application\To-Do List Application\bin\Debug\net7.0-windows\To-Do List Application.pdb
+C:\Users\rgaet\OneDrive\Documents\GitHub\To-Do_List_Application\To-Do List Application\To-Do List Application\obj\Debug\net7.0-windows\To_Do_List_Application.MainForm.resources
+C:\Users\rgaet\OneDrive\Documents\GitHub\To-Do_List_Application\To-Do List Application\To-Do List Application\obj\Debug\net7.0-windows\To-Do List Application.csproj.GenerateResource.cache
+C:\Users\rgaet\OneDrive\Documents\GitHub\To-Do_List_Application\To-Do List Application\To-Do List Application\obj\Debug\net7.0-windows\To-Do List Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\rgaet\OneDrive\Documents\GitHub\To-Do_List_Application\To-Do List Application\To-Do List Application\obj\Debug\net7.0-windows\To-Do List Application.AssemblyInfoInputs.cache
+C:\Users\rgaet\OneDrive\Documents\GitHub\To-Do_List_Application\To-Do List Application\To-Do List Application\obj\Debug\net7.0-windows\To-Do List Application.AssemblyInfo.cs
+C:\Users\rgaet\OneDrive\Documents\GitHub\To-Do_List_Application\To-Do List Application\To-Do List Application\obj\Debug\net7.0-windows\To-Do List Application.csproj.CoreCompileInputs.cache
+C:\Users\rgaet\OneDrive\Documents\GitHub\To-Do_List_Application\To-Do List Application\To-Do List Application\obj\Debug\net7.0-windows\To-Do List Application.csproj.CopyComplete
+C:\Users\rgaet\OneDrive\Documents\GitHub\To-Do_List_Application\To-Do List Application\To-Do List Application\obj\Debug\net7.0-windows\To-Do List Application.dll
+C:\Users\rgaet\OneDrive\Documents\GitHub\To-Do_List_Application\To-Do List Application\To-Do List Application\obj\Debug\net7.0-windows\refint\To-Do List Application.dll
+C:\Users\rgaet\OneDrive\Documents\GitHub\To-Do_List_Application\To-Do List Application\To-Do List Application\obj\Debug\net7.0-windows\To-Do List Application.pdb
+C:\Users\rgaet\OneDrive\Documents\GitHub\To-Do_List_Application\To-Do List Application\To-Do List Application\obj\Debug\net7.0-windows\To-Do List Application.genruntimeconfig.cache
+C:\Users\rgaet\OneDrive\Documents\GitHub\To-Do_List_Application\To-Do List Application\To-Do List Application\obj\Debug\net7.0-windows\ref\To-Do List Application.dll
+C:\Users\rgaet\OneDrive\Documents\GitHub\To-Do_List_Application\To-Do List Application\To-Do List Application\bin\Debug\net7.0-windows\EntityFramework.SqlServer.dll
+C:\Users\rgaet\OneDrive\Documents\GitHub\To-Do_List_Application\To-Do List Application\To-Do List Application\bin\Debug\net7.0-windows\EntityFramework.dll
+C:\Users\rgaet\OneDrive\Documents\GitHub\To-Do_List_Application\To-Do List Application\To-Do List Application\bin\Debug\net7.0-windows\System.Data.SQLite.dll
+C:\Users\rgaet\OneDrive\Documents\GitHub\To-Do_List_Application\To-Do List Application\To-Do List Application\bin\Debug\net7.0-windows\System.Data.SqlClient.dll
+C:\Users\rgaet\OneDrive\Documents\GitHub\To-Do_List_Application\To-Do List Application\To-Do List Application\bin\Debug\net7.0-windows\System.Data.SQLite.EF6.dll
+C:\Users\rgaet\OneDrive\Documents\GitHub\To-Do_List_Application\To-Do List Application\To-Do List Application\bin\Debug\net7.0-windows\runtimes\win-arm64\native\sni.dll
+C:\Users\rgaet\OneDrive\Documents\GitHub\To-Do_List_Application\To-Do List Application\To-Do List Application\bin\Debug\net7.0-windows\runtimes\win-x64\native\sni.dll
+C:\Users\rgaet\OneDrive\Documents\GitHub\To-Do_List_Application\To-Do List Application\To-Do List Application\bin\Debug\net7.0-windows\runtimes\win-x86\native\sni.dll
+C:\Users\rgaet\OneDrive\Documents\GitHub\To-Do_List_Application\To-Do List Application\To-Do List Application\bin\Debug\net7.0-windows\runtimes\linux-x64\native\SQLite.Interop.dll
+C:\Users\rgaet\OneDrive\Documents\GitHub\To-Do_List_Application\To-Do List Application\To-Do List Application\bin\Debug\net7.0-windows\runtimes\osx-x64\native\SQLite.Interop.dll
+C:\Users\rgaet\OneDrive\Documents\GitHub\To-Do_List_Application\To-Do List Application\To-Do List Application\bin\Debug\net7.0-windows\runtimes\win-x64\native\SQLite.Interop.dll
+C:\Users\rgaet\OneDrive\Documents\GitHub\To-Do_List_Application\To-Do List Application\To-Do List Application\bin\Debug\net7.0-windows\runtimes\win-x86\native\SQLite.Interop.dll
+C:\Users\rgaet\OneDrive\Documents\GitHub\To-Do_List_Application\To-Do List Application\To-Do List Application\bin\Debug\net7.0-windows\runtimes\unix\lib\netcoreapp2.1\System.Data.SqlClient.dll
+C:\Users\rgaet\OneDrive\Documents\GitHub\To-Do_List_Application\To-Do List Application\To-Do List Application\bin\Debug\net7.0-windows\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll
+C:\Users\rgaet\OneDrive\Documents\GitHub\To-Do_List_Application\To-Do List Application\To-Do List Application\obj\Debug\net7.0-windows\To-Do List Application.csproj.AssemblyReference.cache
+C:\Users\rgaet\OneDrive\Documents\GitHub\To-Do_List_Application\To-Do List Application\To-Do List Application\obj\Debug\net7.0-windows\To_Do_List_Application.Properties.Resources.resources
