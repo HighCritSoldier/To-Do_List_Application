@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             panel1 = new Panel();
             label1 = new Label();
@@ -39,9 +38,9 @@
             flowLayoutPanel1 = new FlowLayoutPanel();
             AddItemBtn = new Button();
             DeleteItemBtn = new Button();
-            button5 = new Button();
-            button9 = new Button();
-            button11 = new Button();
+            AllBtn = new Button();
+            CompletedBtn = new Button();
+            UncompletedBtn = new Button();
             button2 = new Button();
             button3 = new Button();
             button4 = new Button();
@@ -50,11 +49,6 @@
             button7 = new Button();
             button10 = new Button();
             button8 = new Button();
-            StatusCheckBox = new DataGridViewCheckBoxColumn();
-            NameTxt = new DataGridViewTextBoxColumn();
-            DescriptionTxt = new DataGridViewTextBoxColumn();
-            DueDateTxt = new DataGridViewTextBoxColumn();
-            PriorityCategory = new DataGridViewComboBoxColumn();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)ToDoListView).BeginInit();
             flowLayoutPanel1.SuspendLayout();
@@ -106,18 +100,18 @@
             ToDoListView.AllowUserToAddRows = false;
             ToDoListView.AllowUserToDeleteRows = false;
             ToDoListView.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            ToDoListView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             ToDoListView.BackgroundColor = Color.FromArgb(32, 32, 32);
             ToDoListView.BorderStyle = BorderStyle.None;
             ToDoListView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            ToDoListView.Columns.AddRange(new DataGridViewColumn[] { StatusCheckBox, NameTxt, DescriptionTxt, DueDateTxt, PriorityCategory });
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = Color.FromArgb(48, 48, 48);
-            dataGridViewCellStyle2.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle2.ForeColor = Color.White;
-            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
-            ToDoListView.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(48, 48, 48);
+            dataGridViewCellStyle1.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle1.ForeColor = Color.White;
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.False;
+            ToDoListView.DefaultCellStyle = dataGridViewCellStyle1;
             ToDoListView.Location = new Point(311, 106);
             ToDoListView.Name = "ToDoListView";
             ToDoListView.RowTemplate.Height = 25;
@@ -130,9 +124,9 @@
             flowLayoutPanel1.BackColor = Color.FromArgb(40, 40, 40);
             flowLayoutPanel1.Controls.Add(AddItemBtn);
             flowLayoutPanel1.Controls.Add(DeleteItemBtn);
-            flowLayoutPanel1.Controls.Add(button5);
-            flowLayoutPanel1.Controls.Add(button9);
-            flowLayoutPanel1.Controls.Add(button11);
+            flowLayoutPanel1.Controls.Add(AllBtn);
+            flowLayoutPanel1.Controls.Add(CompletedBtn);
+            flowLayoutPanel1.Controls.Add(UncompletedBtn);
             flowLayoutPanel1.Controls.Add(button2);
             flowLayoutPanel1.Controls.Add(button3);
             flowLayoutPanel1.Controls.Add(button4);
@@ -167,35 +161,39 @@
             DeleteItemBtn.UseVisualStyleBackColor = true;
             DeleteItemBtn.Click += DeleteItemBtn_Click;
             // 
-            // button5
+            // AllBtn
             // 
-            button5.Location = new Point(252, 5);
-            button5.Margin = new Padding(30, 5, 3, 5);
-            button5.Name = "button5";
-            button5.Size = new Size(50, 35);
-            button5.TabIndex = 0;
-            button5.Text = "All";
-            button5.UseVisualStyleBackColor = true;
+            AllBtn.BackColor = Color.LightGray;
+            AllBtn.Location = new Point(252, 5);
+            AllBtn.Margin = new Padding(30, 5, 3, 5);
+            AllBtn.Name = "AllBtn";
+            AllBtn.Size = new Size(50, 35);
+            AllBtn.TabIndex = 0;
+            AllBtn.Text = "All";
+            AllBtn.UseVisualStyleBackColor = false;
+            AllBtn.Click += AllBtn_Click;
             // 
-            // button9
+            // CompletedBtn
             // 
-            button9.Location = new Point(308, 5);
-            button9.Margin = new Padding(3, 5, 3, 5);
-            button9.Name = "button9";
-            button9.Size = new Size(100, 35);
-            button9.TabIndex = 1;
-            button9.Text = "Completed";
-            button9.UseVisualStyleBackColor = true;
+            CompletedBtn.Location = new Point(308, 5);
+            CompletedBtn.Margin = new Padding(3, 5, 3, 5);
+            CompletedBtn.Name = "CompletedBtn";
+            CompletedBtn.Size = new Size(100, 35);
+            CompletedBtn.TabIndex = 1;
+            CompletedBtn.Text = "Completed";
+            CompletedBtn.UseVisualStyleBackColor = true;
+            CompletedBtn.Click += CompletedBtn_Click;
             // 
-            // button11
+            // UncompletedBtn
             // 
-            button11.Location = new Point(414, 5);
-            button11.Margin = new Padding(3, 5, 3, 5);
-            button11.Name = "button11";
-            button11.Size = new Size(100, 35);
-            button11.TabIndex = 2;
-            button11.Text = "Uncompleted";
-            button11.UseVisualStyleBackColor = true;
+            UncompletedBtn.Location = new Point(414, 5);
+            UncompletedBtn.Margin = new Padding(3, 5, 3, 5);
+            UncompletedBtn.Name = "UncompletedBtn";
+            UncompletedBtn.Size = new Size(100, 35);
+            UncompletedBtn.TabIndex = 2;
+            UncompletedBtn.Text = "Uncompleted";
+            UncompletedBtn.UseVisualStyleBackColor = true;
+            UncompletedBtn.Click += UncompletedBtn_Click;
             // 
             // button2
             // 
@@ -282,38 +280,6 @@
             button8.TextAlign = ContentAlignment.MiddleLeft;
             button8.UseVisualStyleBackColor = true;
             // 
-            // StatusCheckBox
-            // 
-            StatusCheckBox.HeaderText = "Status";
-            StatusCheckBox.Name = "StatusCheckBox";
-            StatusCheckBox.Width = 50;
-            // 
-            // NameTxt
-            // 
-            NameTxt.HeaderText = "Name";
-            NameTxt.Name = "NameTxt";
-            NameTxt.Width = 150;
-            // 
-            // DescriptionTxt
-            // 
-            DescriptionTxt.HeaderText = "Description";
-            DescriptionTxt.Name = "DescriptionTxt";
-            DescriptionTxt.Width = 300;
-            // 
-            // DueDateTxt
-            // 
-            dataGridViewCellStyle1.Format = "d";
-            dataGridViewCellStyle1.NullValue = null;
-            DueDateTxt.DefaultCellStyle = dataGridViewCellStyle1;
-            DueDateTxt.HeaderText = "Due Date";
-            DueDateTxt.Name = "DueDateTxt";
-            // 
-            // PriorityCategory
-            // 
-            PriorityCategory.HeaderText = "Priority";
-            PriorityCategory.Items.AddRange(new object[] { "High", "Medium", "Low" });
-            PriorityCategory.Name = "PriorityCategory";
-            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -345,23 +311,18 @@
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private DataGridView ToDoListView;
         private FlowLayoutPanel flowLayoutPanel1;
-        private Button button5;
+        private Button AllBtn;
         private FlowLayoutPanel flowLayoutPanel2;
         private Button button6;
         private Button button7;
         private Button button8;
-        private Button button9;
-        private Button button11;
+        private Button CompletedBtn;
+        private Button UncompletedBtn;
         private Button button10;
         private Button AddItemBtn;
         private Button button2;
         private Button button3;
         private Button button4;
         private Button DeleteItemBtn;
-        private DataGridViewCheckBoxColumn StatusCheckBox;
-        private DataGridViewTextBoxColumn NameTxt;
-        private DataGridViewTextBoxColumn DescriptionTxt;
-        private DataGridViewTextBoxColumn DueDateTxt;
-        private DataGridViewComboBoxColumn PriorityCategory;
     }
 }
