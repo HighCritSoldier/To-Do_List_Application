@@ -11,8 +11,10 @@ namespace To_Do_List_Application
         private TableManager tableManager;
 
         private enum Status { All, Completed, UnCompleted };
+        private enum Priority { None, Low, Medium, High };
 
         Status currentStatus = Status.All;
+        Priority currentPriority = Priority.None;
 
         public MainForm()
         {
@@ -28,9 +30,8 @@ namespace To_Do_List_Application
             ToDoListView.DataSource = bindingSource;
 
             LoadData();
-
-            FormClosing += MainForm_FormClosing;
             ToDoListView.CellEndEdit += TodoListView_CellEndEdit;
+            ToDoListView.CellFormatting += TodoListView_CellFormatting;
         }
 
         private void LoadData()
@@ -48,6 +49,36 @@ namespace To_Do_List_Application
             {
                 tableFilters = " WHERE Status='Uncompleted'";
             }
+            if (currentStatus == Status.All)
+            {
+                if (currentPriority == Priority.High)
+                {
+                    tableFilters = " WHERE Priority='High'";
+                }
+                else if (currentPriority == Priority.Medium)
+                {
+                    tableFilters = " WHERE Priority='Medium'";
+                }
+                else if (currentPriority == Priority.Low)
+                {
+                    tableFilters = " WHERE Priority='Low'";
+                }
+            }
+            else
+            {
+                if (currentPriority == Priority.High)
+                {
+                    tableFilters += " AND Priority='High'";
+                }
+                else if (currentPriority == Priority.Medium)
+                {
+                    tableFilters += " AND Priority='Medium'";
+                }
+                else if (currentPriority == Priority.Low)
+                {
+                    tableFilters += " AND Priority='Low'";
+                }
+            }
             string selectQuery = $"SELECT * FROM ToDoListTable{tableFilters};";
             SQLiteDataAdapter adapter = new SQLiteDataAdapter(selectQuery, databaseManager.GetConnection());
             var dataTable = new DataTable();
@@ -56,30 +87,6 @@ namespace To_Do_List_Application
 
             // Hides the id column
             ToDoListView.Columns[0].Visible = false;
-
-        }
-
-        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            // Save any changes to the SQLite database before closing the form
-            SaveChanges();
-        }
-
-        private void SaveChanges()
-        {
-            if (ToDoListView.DataSource is DataTable dataTable)
-            {
-                using (SQLiteDataAdapter adapter = new SQLiteDataAdapter("SELECT * FROM ToDoListTable", databaseManager.GetConnection()))
-                {
-                    using (SQLiteCommandBuilder commandBuilder = new SQLiteCommandBuilder(adapter))
-                    {
-                        adapter.Update(dataTable);
-                    }
-                }
-            }
-
-            // Close the database connection
-            databaseManager.CloseConnection();
         }
 
         private void TodoListView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
@@ -94,33 +101,41 @@ namespace To_Do_List_Application
             UpdateDatabase(primaryKeyValue, e.ColumnIndex, editedValue);
         }
 
+        private void TodoListView_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (e.ColumnIndex >= 0 && e.RowIndex >= 0)
+            {
+                // Sets column index to Status column
+                int completeColumnIndex = 1;
+
+                // Check if the cell contains "Completed"
+                if (ToDoListView.Rows[e.RowIndex].Cells[completeColumnIndex].Value.ToString() == "Completed")
+                {
+                    e.CellStyle.BackColor = Color.Green;
+                }
+                // Check if the cell contains "Uncompleted"
+                else if (ToDoListView.Rows[e.RowIndex].Cells[completeColumnIndex].Value.ToString() == "Uncompleted")
+                {
+                    e.CellStyle.BackColor = Color.DarkRed;
+                }
+                else
+                {
+                    // Reset the background color for other values
+                    e.CellStyle.BackColor = ToDoListView.DefaultCellStyle.BackColor;
+                }
+            }
+        }
+
+
         private void UpdateDatabase(int primaryKeyValue, int columnIndex, object editedValue)
         {
             string columnName = "";
-            if (columnIndex == 0)
-            {
-                columnName = "ID";
-            }
-            else if (columnIndex == 1)
-            {
-                columnName = "Status";
-            }
-            else if (columnIndex == 2)
-            {
-                columnName = "Name";
-            }
-            else if (columnIndex == 3)
-            {
-                columnName = "Description";
-            }
-            else if (columnIndex == 4)
-            {
-                columnName = "DueDate";
-            }
-            else if (columnIndex == 5)
-            {
-                columnName = "Priority";
-            }
+            if (columnIndex == 0) { columnName = "ID"; }
+            else if (columnIndex == 1) { columnName = "Status"; }
+            else if (columnIndex == 2) { columnName = "Name"; }
+            else if (columnIndex == 3) { columnName = "Description"; }
+            else if (columnIndex == 4) { columnName = "DueDate"; }
+            else if (columnIndex == 5) { columnName = "Priority"; }
             // Update the corresponding row in the SQLite database
             string updateQuery = $"UPDATE ToDoListTable SET {columnName} = @EditedValue WHERE ID = @PrimaryKeyValue;";
 
@@ -133,6 +148,7 @@ namespace To_Do_List_Application
                 cmd.ExecuteNonQuery();
                 databaseManager.CloseConnection();
             }
+            LoadData();
         }
 
         private void AddItemBtn_Click(object sender, EventArgs e)
@@ -222,6 +238,57 @@ namespace To_Do_List_Application
             CompletedBtn.BackColor = Color.White;
             UncompletedBtn.BackColor = Color.LightGray;
 
+            LoadData();
+        }
+
+        private void HighPriorityBtn_Click(object sender, EventArgs e)
+        {
+            if (currentPriority == Priority.High)
+            {
+                currentPriority = Priority.None;
+                HighPriorityBtn.BackColor = Color.White;
+            }
+            else
+            {
+                currentPriority = Priority.High;
+                HighPriorityBtn.BackColor = Color.LightGray;
+                MediumPriorityBtn.BackColor = Color.White;
+                LowPriorityBtn.BackColor = Color.White;
+            }
+            LoadData();
+        }
+
+        private void MediumPriorityBtn_Click(object sender, EventArgs e)
+        {
+            if (currentPriority == Priority.Medium)
+            {
+                currentPriority = Priority.None;
+                MediumPriorityBtn.BackColor = Color.White;
+            }
+            else
+            {
+                currentPriority = Priority.Medium;
+                HighPriorityBtn.BackColor = Color.White;
+                MediumPriorityBtn.BackColor = Color.LightGray;
+                LowPriorityBtn.BackColor = Color.White;
+            }
+            LoadData();
+        }
+
+        private void LowPriorityBtn_Click(object sender, EventArgs e)
+        {
+            if (currentPriority == Priority.Low)
+            {
+                currentPriority = Priority.None;
+                LowPriorityBtn.BackColor = Color.White;
+            }
+            else
+            {
+                currentPriority = Priority.Low;
+                HighPriorityBtn.BackColor = Color.White;
+                MediumPriorityBtn.BackColor = Color.White;
+                LowPriorityBtn.BackColor = Color.LightGray;
+            }
             LoadData();
         }
     }

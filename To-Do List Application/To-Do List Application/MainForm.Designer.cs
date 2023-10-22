@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             panel1 = new Panel();
             label1 = new Label();
             button1 = new Button();
@@ -41,9 +41,9 @@
             AllBtn = new Button();
             CompletedBtn = new Button();
             UncompletedBtn = new Button();
-            button2 = new Button();
-            button3 = new Button();
-            button4 = new Button();
+            HighPriorityBtn = new Button();
+            MediumPriorityBtn = new Button();
+            LowPriorityBtn = new Button();
             flowLayoutPanel2 = new FlowLayoutPanel();
             button6 = new Button();
             button7 = new Button();
@@ -104,14 +104,14 @@
             ToDoListView.BackgroundColor = Color.FromArgb(32, 32, 32);
             ToDoListView.BorderStyle = BorderStyle.None;
             ToDoListView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = Color.FromArgb(48, 48, 48);
-            dataGridViewCellStyle1.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle1.ForeColor = Color.White;
-            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.False;
-            ToDoListView.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = Color.FromArgb(48, 48, 48);
+            dataGridViewCellStyle4.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle4.ForeColor = Color.White;
+            dataGridViewCellStyle4.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.False;
+            ToDoListView.DefaultCellStyle = dataGridViewCellStyle4;
             ToDoListView.Location = new Point(311, 106);
             ToDoListView.Name = "ToDoListView";
             ToDoListView.RowTemplate.Height = 25;
@@ -127,9 +127,9 @@
             flowLayoutPanel1.Controls.Add(AllBtn);
             flowLayoutPanel1.Controls.Add(CompletedBtn);
             flowLayoutPanel1.Controls.Add(UncompletedBtn);
-            flowLayoutPanel1.Controls.Add(button2);
-            flowLayoutPanel1.Controls.Add(button3);
-            flowLayoutPanel1.Controls.Add(button4);
+            flowLayoutPanel1.Controls.Add(HighPriorityBtn);
+            flowLayoutPanel1.Controls.Add(MediumPriorityBtn);
+            flowLayoutPanel1.Controls.Add(LowPriorityBtn);
             flowLayoutPanel1.Location = new Point(311, 60);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
             flowLayoutPanel1.Size = new Size(1139, 40);
@@ -195,35 +195,38 @@
             UncompletedBtn.UseVisualStyleBackColor = true;
             UncompletedBtn.Click += UncompletedBtn_Click;
             // 
-            // button2
+            // HighPriorityBtn
             // 
-            button2.Location = new Point(547, 5);
-            button2.Margin = new Padding(30, 5, 3, 5);
-            button2.Name = "button2";
-            button2.Size = new Size(100, 35);
-            button2.TabIndex = 4;
-            button2.Text = "High Priority";
-            button2.UseVisualStyleBackColor = true;
+            HighPriorityBtn.Location = new Point(547, 5);
+            HighPriorityBtn.Margin = new Padding(30, 5, 3, 5);
+            HighPriorityBtn.Name = "HighPriorityBtn";
+            HighPriorityBtn.Size = new Size(100, 35);
+            HighPriorityBtn.TabIndex = 4;
+            HighPriorityBtn.Text = "High Priority";
+            HighPriorityBtn.UseVisualStyleBackColor = true;
+            HighPriorityBtn.Click += HighPriorityBtn_Click;
             // 
-            // button3
+            // MediumPriorityBtn
             // 
-            button3.Location = new Point(653, 5);
-            button3.Margin = new Padding(3, 5, 3, 5);
-            button3.Name = "button3";
-            button3.Size = new Size(110, 35);
-            button3.TabIndex = 5;
-            button3.Text = "Medium Priority";
-            button3.UseVisualStyleBackColor = true;
+            MediumPriorityBtn.Location = new Point(653, 5);
+            MediumPriorityBtn.Margin = new Padding(3, 5, 3, 5);
+            MediumPriorityBtn.Name = "MediumPriorityBtn";
+            MediumPriorityBtn.Size = new Size(110, 35);
+            MediumPriorityBtn.TabIndex = 5;
+            MediumPriorityBtn.Text = "Medium Priority";
+            MediumPriorityBtn.UseVisualStyleBackColor = true;
+            MediumPriorityBtn.Click += MediumPriorityBtn_Click;
             // 
-            // button4
+            // LowPriorityBtn
             // 
-            button4.Location = new Point(769, 5);
-            button4.Margin = new Padding(3, 5, 3, 5);
-            button4.Name = "button4";
-            button4.Size = new Size(100, 35);
-            button4.TabIndex = 6;
-            button4.Text = "Low Priority";
-            button4.UseVisualStyleBackColor = true;
+            LowPriorityBtn.Location = new Point(769, 5);
+            LowPriorityBtn.Margin = new Padding(3, 5, 3, 5);
+            LowPriorityBtn.Name = "LowPriorityBtn";
+            LowPriorityBtn.Size = new Size(100, 35);
+            LowPriorityBtn.TabIndex = 6;
+            LowPriorityBtn.Text = "Low Priority";
+            LowPriorityBtn.UseVisualStyleBackColor = true;
+            LowPriorityBtn.Click += LowPriorityBtn_Click;
             // 
             // flowLayoutPanel2
             // 
@@ -320,9 +323,9 @@
         private Button UncompletedBtn;
         private Button button10;
         private Button AddItemBtn;
-        private Button button2;
-        private Button button3;
-        private Button button4;
+        private Button HighPriorityBtn;
+        private Button MediumPriorityBtn;
+        private Button LowPriorityBtn;
         private Button DeleteItemBtn;
     }
 }
