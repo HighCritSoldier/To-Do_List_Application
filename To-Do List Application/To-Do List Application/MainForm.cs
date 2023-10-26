@@ -9,12 +9,26 @@ namespace To_Do_List_Application
         private BindingSource bindingSource;
         private DatabaseManager databaseManager;
         private TableManager tableManager;
+        private SQLiteCommand command;
+        private string CategoryFilter = "";
 
         private enum Status { All, Completed, UnCompleted };
         private enum Priority { None, Low, Medium, High };
+        private enum Date { None, Today, Tomorrow, ThisWeek, PastDue };
 
         Status currentStatus = Status.All;
         Priority currentPriority = Priority.None;
+        Date dateSelected = Date.None;
+
+        /*
+        DateTime today = DateTime.Today;
+        DateTime tomorrow = DateTime.Today.AddDays(1);
+        DateTime twoDaysFromNow = DateTime.Today.AddDays(2);
+        DateTime threeDaysFromNow = DateTime.Today.AddDays(3);
+        DateTime fourDaysFromNow = DateTime.Today.AddDays(4);
+        DateTime fiveDaysFromNow = DateTime.Today.AddDays(5);
+        DateTime sixDaysFromNow = DateTime.Today.AddDays(6);
+        */
 
         public MainForm()
         {
@@ -25,11 +39,13 @@ namespace To_Do_List_Application
 
             tableManager = new TableManager(databaseManager.GetConnection());
             tableManager.CreateTable();
+            tableManager.CreateCategories();
 
             bindingSource = new BindingSource();
             ToDoListView.DataSource = bindingSource;
 
             LoadData();
+            LoadCategories();
             ToDoListView.CellEndEdit += TodoListView_CellEndEdit;
             ToDoListView.CellFormatting += TodoListView_CellFormatting;
         }
@@ -37,53 +53,109 @@ namespace To_Do_List_Application
         private void LoadData()
         {
             string tableFilters = "";
-            if (currentStatus == Status.All)
+            int filterCount = 0;
+            bool hasStatus = false;
+            bool hasPriority = false;
+            bool hasDate = false;
+            bool hasCategory = false;
+
+            if (currentStatus != Status.All) { filterCount++; }
+            if (currentPriority != Priority.None) { filterCount++; }
+            if (dateSelected != Date.None) { filterCount++; }
+            if (CategoryFilter != "None") { filterCount++; }
+
+            if (filterCount != 0)
             {
-                tableFilters = "";
+                for (int i = 1; i <= filterCount; i++)
+                {
+                    if (i == 1) { tableFilters += " WHERE "; }
+                    if (i != 1) { tableFilters += " AND "; }
+                    if (!hasStatus)
+                    {
+                        if (currentStatus == Status.Completed)
+                        {
+                            tableFilters += "Status='Completed'";
+                            hasStatus = true;
+                            continue;
+                        }
+                        else if (currentStatus == Status.UnCompleted)
+                        {
+                            tableFilters += "Status='Uncompleted'";
+                            hasStatus = true;
+                            continue;
+                        }
+                    }
+                    if (!hasPriority)
+                    {
+                        if (currentPriority == Priority.High)
+                        {
+                            tableFilters += "Priority='High'";
+                            hasPriority = true;
+                            continue;
+                        }
+                        else if (currentPriority == Priority.Medium)
+                        {
+                            tableFilters += "Priority='Medium'";
+                            hasPriority = true;
+                            continue;
+                        }
+                        else if (currentPriority == Priority.Low)
+                        {
+                            tableFilters += "Priority='Low'";
+                            hasPriority = true;
+                            continue;
+                        }
+                    }
+                    if (!hasDate)
+                    {
+                        if (dateSelected == Date.Today)
+                        {
+                            tableFilters += "DueDate = Date('now')";
+                            hasDate = true;
+                            continue;
+                        }
+                        else if (dateSelected == Date.Tomorrow)
+                        {
+                            tableFilters += "DueDate = Date('now', '+1 day')";
+                            hasDate = true;
+                            continue;
+                        }
+                        else if (dateSelected == Date.ThisWeek)
+                        {
+                            tableFilters += "DueDate BETWEEN Date('now') AND Date('now', '+5 day')";
+                            hasDate = true;
+                            continue;
+                        }
+                        else if (dateSelected == Date.PastDue)
+                        {
+                            tableFilters += "DueDate < Date('now')";
+                            hasDate = true;
+                            continue;
+                        }
+                    }
+                    if (!hasCategory)
+                    {
+                        if (CategoryFilter != "None")
+                        {
+                            tableFilters += $"Category LIKE '%{CategoryFilter}%'";
+                            hasCategory = true;
+                            continue;
+                        }
+                    }
+                }
             }
-            else if (currentStatus == Status.Completed)
+            try
             {
-                tableFilters = " WHERE Status='Completed'";
+                string selectQuery = $"SELECT * FROM ToDoListTable{tableFilters};";
+                SQLiteDataAdapter adapter = new SQLiteDataAdapter(selectQuery, databaseManager.GetConnection());
+                var dataTable = new DataTable();
+                adapter.Fill(dataTable);
+                bindingSource.DataSource = dataTable;
             }
-            else if (currentStatus == Status.UnCompleted)
+            catch (Exception ex)
             {
-                tableFilters = " WHERE Status='Uncompleted'";
+                Console.WriteLine(ex);
             }
-            if (currentStatus == Status.All)
-            {
-                if (currentPriority == Priority.High)
-                {
-                    tableFilters = " WHERE Priority='High'";
-                }
-                else if (currentPriority == Priority.Medium)
-                {
-                    tableFilters = " WHERE Priority='Medium'";
-                }
-                else if (currentPriority == Priority.Low)
-                {
-                    tableFilters = " WHERE Priority='Low'";
-                }
-            }
-            else
-            {
-                if (currentPriority == Priority.High)
-                {
-                    tableFilters += " AND Priority='High'";
-                }
-                else if (currentPriority == Priority.Medium)
-                {
-                    tableFilters += " AND Priority='Medium'";
-                }
-                else if (currentPriority == Priority.Low)
-                {
-                    tableFilters += " AND Priority='Low'";
-                }
-            }
-            string selectQuery = $"SELECT * FROM ToDoListTable{tableFilters};";
-            SQLiteDataAdapter adapter = new SQLiteDataAdapter(selectQuery, databaseManager.GetConnection());
-            var dataTable = new DataTable();
-            adapter.Fill(dataTable);
-            bindingSource.DataSource = dataTable;
 
             // Hides the id column
             ToDoListView.Columns[0].Visible = false;
@@ -133,9 +205,10 @@ namespace To_Do_List_Application
             if (columnIndex == 0) { columnName = "ID"; }
             else if (columnIndex == 1) { columnName = "Status"; }
             else if (columnIndex == 2) { columnName = "Name"; }
-            else if (columnIndex == 3) { columnName = "Description"; }
-            else if (columnIndex == 4) { columnName = "DueDate"; }
-            else if (columnIndex == 5) { columnName = "Priority"; }
+            else if (columnIndex == 3) { columnName = "Category"; }
+            else if (columnIndex == 4) { columnName = "Description"; }
+            else if (columnIndex == 5) { columnName = "DueDate"; }
+            else if (columnIndex == 6) { columnName = "Priority"; }
             // Update the corresponding row in the SQLite database
             string updateQuery = $"UPDATE ToDoListTable SET {columnName} = @EditedValue WHERE ID = @PrimaryKeyValue;";
 
@@ -154,7 +227,7 @@ namespace To_Do_List_Application
         private void AddItemBtn_Click(object sender, EventArgs e)
         {
             // Insert data into the SQLite database
-            string insertQuery = "INSERT INTO ToDoListTable (Status, Name, Description, DueDate, Priority) VALUES (@Column1, @Column2, @Column3, @Column4, @Column5);";
+            string insertQuery = "INSERT INTO ToDoListTable (Status, Name, Category, Description, DueDate, Priority) VALUES (@Column1, @Column2, @Column3, @Column4, @Column5, @Column6);";
             using (SQLiteCommand cmd = new SQLiteCommand(insertQuery, databaseManager.GetConnection()))
             {
                 cmd.Parameters.AddWithValue("@Column1", "Uncompleted");
@@ -162,6 +235,7 @@ namespace To_Do_List_Application
                 cmd.Parameters.AddWithValue("@Column3", "");
                 cmd.Parameters.AddWithValue("@Column4", "");
                 cmd.Parameters.AddWithValue("@Column5", "");
+                cmd.Parameters.AddWithValue("@Column6", "");
 
                 databaseManager.OpenConnection();
                 cmd.ExecuteNonQuery();
@@ -291,6 +365,179 @@ namespace To_Do_List_Application
             }
             LoadData();
         }
+
+        private void TodayBtn_Click(object sender, EventArgs e)
+        {
+            if (dateSelected == Date.Today)
+            {
+                dateSelected = Date.None;
+                TodayBtn.BackColor = Color.White;
+            }
+            else
+            {
+                dateSelected = Date.Today;
+                TodayBtn.BackColor = Color.LightGray;
+                TomorrowBtn.BackColor = Color.White;
+                ThisWeekBtn.BackColor = Color.White;
+                PastDueBtn.BackColor = Color.White;
+            }
+            LoadData();
+        }
+
+        private void TomorrowBtn_Click(object sender, EventArgs e)
+        {
+            if (dateSelected == Date.Tomorrow)
+            {
+                dateSelected = Date.None;
+                TomorrowBtn.BackColor = Color.White;
+            }
+            else
+            {
+                dateSelected = Date.Tomorrow;
+                TodayBtn.BackColor = Color.White;
+                TomorrowBtn.BackColor = Color.LightGray;
+                ThisWeekBtn.BackColor = Color.White;
+                PastDueBtn.BackColor = Color.White;
+            }
+            LoadData();
+        }
+
+        private void ThisWeekBtn_Click(object sender, EventArgs e)
+        {
+            if (dateSelected == Date.ThisWeek)
+            {
+                dateSelected = Date.None;
+                ThisWeekBtn.BackColor = Color.White;
+            }
+            else
+            {
+                dateSelected = Date.ThisWeek;
+                TodayBtn.BackColor = Color.White;
+                TomorrowBtn.BackColor = Color.White;
+                ThisWeekBtn.BackColor = Color.LightGray;
+                PastDueBtn.BackColor = Color.White;
+            }
+            LoadData();
+        }
+
+        private void PastDueBtn_Click(object sender, EventArgs e)
+        {
+            if (dateSelected == Date.PastDue)
+            {
+                dateSelected = Date.None;
+                PastDueBtn.BackColor = Color.White;
+            }
+            else
+            {
+                dateSelected = Date.PastDue;
+                TodayBtn.BackColor = Color.White;
+                TomorrowBtn.BackColor = Color.White;
+                ThisWeekBtn.BackColor = Color.White;
+                PastDueBtn.BackColor = Color.LightGray;
+            }
+            LoadData();
+        }
+
+        private void CategoryAddTxtBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+
+            if (e.KeyChar == (char)13) // 13 is the Enter key code
+            {
+                try
+                {
+                    string addQuery = "Insert INTO Categories (Name) VALUES (@AddValue)";
+                    string addValue = CategoryAddTxtBox.Text;
+
+                    using (SQLiteCommand cmd = new SQLiteCommand(addQuery, databaseManager.GetConnection()))
+                    {
+                        cmd.Parameters.AddWithValue("@AddValue", addValue);
+
+                        databaseManager.OpenConnection();
+                        cmd.ExecuteNonQuery();
+                        databaseManager.CloseConnection();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
+
+                LoadCategories();
+
+                CategoryAddTxtBox.Text = string.Empty;
+                // Prevent the TextBox from inserting a newline character (Enter key)
+                e.Handled = true;
+            }
+        }
+
+        private void LoadCategories()
+        {
+            CategoryListBox.Items.Clear();
+
+            string query = "SELECT Name FROM Categories;";
+            databaseManager.OpenConnection();
+            using (SQLiteCommand command = new SQLiteCommand(query, databaseManager.GetConnection()))
+            {
+                using (SQLiteDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        string name = reader["Name"].ToString();
+                        CategoryListBox.Items.Add(name);
+                    }
+                }
+            }
+            databaseManager.CloseConnection();
+        }
+
+        private void CategoryFilterBtn_Click(object sender, EventArgs e)
+        {
+            if (CategoryListBox.SelectedItems.Count > 0)
+            {
+                CategoryFilter = CategoryListBox.SelectedItem.ToString();
+                LoadCategories();
+                LoadData();
+            }
+            else
+            {
+                MessageBox.Show("Please choose a category to filter.");
+            }
+        }
+
+        private void DeleteCategoryBtn_Click(object sender, EventArgs e)
+        {
+            if (CategoryListBox.SelectedItems.Count > 0)
+            {
+                string deleteQuery = "DELETE FROM Categories WHERE Name = @NameValue;";
+                string NameValue = CategoryListBox.SelectedItem.ToString();
+
+                using (SQLiteCommand cmd = new SQLiteCommand(deleteQuery, databaseManager.GetConnection()))
+                {
+                    cmd.Parameters.AddWithValue("@NameValue", NameValue);
+
+                    databaseManager.OpenConnection();
+                    cmd.ExecuteNonQuery();
+                    databaseManager.CloseConnection();
+                }
+                if (NameValue == CategoryFilter)
+                {
+                    CategoryFilter = "None";
+                    LoadData();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please choose a category to delete.");
+            }
+            LoadCategories();
+        }
+
+        private void RemoveCategoryFilterBtn_Click(object sender, EventArgs e)
+        {
+            CategoryFilter = "None";
+            LoadCategories();
+            LoadData();
+        }
     }
     public class DatabaseManager
     {
@@ -342,8 +589,14 @@ namespace To_Do_List_Application
 
         public void CreateTable()
         {
-            string createTableQuery = "CREATE TABLE IF NOT EXISTS ToDoListTable (ID INTEGER PRIMARY KEY AUTOINCREMENT, Status TEXT, Name TEXT, Description TEXT, DueDate TEXT, Priority TEXT);";
+            string createTableQuery = "CREATE TABLE IF NOT EXISTS ToDoListTable (ID INTEGER PRIMARY KEY AUTOINCREMENT, Status TEXT, Name TEXT, Category TEXT, Description TEXT, DueDate TEXT, Priority TEXT);";
+            command.CommandText = createTableQuery;
+            command.ExecuteNonQuery();
+        }
 
+        public void CreateCategories()
+        {
+            string createTableQuery = "CREATE TABLE IF NOT EXISTS Categories (ID INTEGER PRIMARY KEY AUTOINCREMENT, Name TEXT);";
             command.CommandText = createTableQuery;
             command.ExecuteNonQuery();
         }

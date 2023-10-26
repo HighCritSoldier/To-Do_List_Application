@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             panel1 = new Panel();
             label1 = new Label();
             button1 = new Button();
@@ -45,14 +45,30 @@
             MediumPriorityBtn = new Button();
             LowPriorityBtn = new Button();
             flowLayoutPanel2 = new FlowLayoutPanel();
-            button6 = new Button();
-            button7 = new Button();
-            button10 = new Button();
-            button8 = new Button();
+            panel4 = new Panel();
+            label2 = new Label();
+            tableLayoutPanel2 = new TableLayoutPanel();
+            TodayBtn = new Button();
+            TomorrowBtn = new Button();
+            PastDueBtn = new Button();
+            ThisWeekBtn = new Button();
+            panel5 = new Panel();
+            label3 = new Label();
+            CategoryAddTxtBox = new TextBox();
+            CategoryListBox = new ListBox();
+            tableLayoutPanel1 = new TableLayoutPanel();
+            CategoryFilterBtn = new Button();
+            DeleteCategoryBtn = new Button();
+            backgroundWorker2 = new System.ComponentModel.BackgroundWorker();
+            RemoveCategoryFilterBtn = new Button();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)ToDoListView).BeginInit();
             flowLayoutPanel1.SuspendLayout();
             flowLayoutPanel2.SuspendLayout();
+            panel4.SuspendLayout();
+            tableLayoutPanel2.SuspendLayout();
+            panel5.SuspendLayout();
+            tableLayoutPanel1.SuspendLayout();
             SuspendLayout();
             // 
             // panel1
@@ -99,19 +115,22 @@
             // 
             ToDoListView.AllowUserToAddRows = false;
             ToDoListView.AllowUserToDeleteRows = false;
+            ToDoListView.AllowUserToResizeColumns = false;
+            ToDoListView.AllowUserToResizeRows = false;
             ToDoListView.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             ToDoListView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             ToDoListView.BackgroundColor = Color.FromArgb(32, 32, 32);
             ToDoListView.BorderStyle = BorderStyle.None;
             ToDoListView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = Color.FromArgb(48, 48, 48);
-            dataGridViewCellStyle4.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle4.ForeColor = Color.White;
-            dataGridViewCellStyle4.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.False;
-            ToDoListView.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(48, 48, 48);
+            dataGridViewCellStyle1.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle1.ForeColor = Color.White;
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.False;
+            ToDoListView.DefaultCellStyle = dataGridViewCellStyle1;
+            ToDoListView.EditMode = DataGridViewEditMode.EditOnKeystroke;
             ToDoListView.Location = new Point(311, 106);
             ToDoListView.Name = "ToDoListView";
             ToDoListView.RowTemplate.Height = 25;
@@ -230,58 +249,191 @@
             // 
             // flowLayoutPanel2
             // 
-            flowLayoutPanel2.Controls.Add(button6);
-            flowLayoutPanel2.Controls.Add(button7);
-            flowLayoutPanel2.Controls.Add(button10);
-            flowLayoutPanel2.Controls.Add(button8);
+            flowLayoutPanel2.Controls.Add(panel4);
+            flowLayoutPanel2.Controls.Add(tableLayoutPanel2);
+            flowLayoutPanel2.Controls.Add(panel5);
+            flowLayoutPanel2.Controls.Add(CategoryAddTxtBox);
+            flowLayoutPanel2.Controls.Add(CategoryListBox);
+            flowLayoutPanel2.Controls.Add(tableLayoutPanel1);
+            flowLayoutPanel2.Controls.Add(RemoveCategoryFilterBtn);
             flowLayoutPanel2.Location = new Point(10, 60);
             flowLayoutPanel2.Name = "flowLayoutPanel2";
             flowLayoutPanel2.Size = new Size(284, 539);
             flowLayoutPanel2.TabIndex = 4;
             // 
-            // button6
+            // panel4
             // 
-            button6.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point);
-            button6.Location = new Point(3, 3);
-            button6.Name = "button6";
-            button6.Size = new Size(281, 40);
-            button6.TabIndex = 0;
-            button6.Text = "Today";
-            button6.TextAlign = ContentAlignment.MiddleLeft;
-            button6.UseVisualStyleBackColor = true;
+            panel4.BackColor = Color.FromArgb(64, 64, 64);
+            panel4.Controls.Add(label2);
+            panel4.Location = new Point(3, 3);
+            panel4.Name = "panel4";
+            panel4.Size = new Size(281, 32);
+            panel4.TabIndex = 6;
             // 
-            // button7
+            // label2
             // 
-            button7.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point);
-            button7.Location = new Point(3, 49);
-            button7.Name = "button7";
-            button7.Size = new Size(281, 40);
-            button7.TabIndex = 1;
-            button7.Text = "Tomorrow";
-            button7.TextAlign = ContentAlignment.MiddleLeft;
-            button7.UseVisualStyleBackColor = true;
+            label2.AutoSize = true;
+            label2.Dock = DockStyle.Left;
+            label2.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point);
+            label2.ForeColor = Color.White;
+            label2.Location = new Point(0, 0);
+            label2.Name = "label2";
+            label2.Size = new Size(79, 32);
+            label2.TabIndex = 0;
+            label2.Text = "Dates:";
             // 
-            // button10
+            // tableLayoutPanel2
             // 
-            button10.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point);
-            button10.Location = new Point(3, 95);
-            button10.Name = "button10";
-            button10.Size = new Size(281, 40);
-            button10.TabIndex = 4;
-            button10.Text = "This Week";
-            button10.TextAlign = ContentAlignment.MiddleLeft;
-            button10.UseVisualStyleBackColor = true;
+            tableLayoutPanel2.ColumnCount = 2;
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanel2.Controls.Add(TodayBtn, 0, 0);
+            tableLayoutPanel2.Controls.Add(TomorrowBtn, 1, 0);
+            tableLayoutPanel2.Controls.Add(PastDueBtn, 1, 1);
+            tableLayoutPanel2.Controls.Add(ThisWeekBtn, 0, 1);
+            tableLayoutPanel2.Location = new Point(3, 41);
+            tableLayoutPanel2.Name = "tableLayoutPanel2";
+            tableLayoutPanel2.RowCount = 2;
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel2.Size = new Size(281, 100);
+            tableLayoutPanel2.TabIndex = 11;
             // 
-            // button8
+            // TodayBtn
             // 
-            button8.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point);
-            button8.Location = new Point(3, 141);
-            button8.Name = "button8";
-            button8.Size = new Size(281, 40);
-            button8.TabIndex = 2;
-            button8.Text = "Past Due";
-            button8.TextAlign = ContentAlignment.MiddleLeft;
-            button8.UseVisualStyleBackColor = true;
+            TodayBtn.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            TodayBtn.Location = new Point(3, 3);
+            TodayBtn.Name = "TodayBtn";
+            TodayBtn.Size = new Size(134, 40);
+            TodayBtn.TabIndex = 0;
+            TodayBtn.Text = "Today";
+            TodayBtn.TextAlign = ContentAlignment.MiddleLeft;
+            TodayBtn.UseVisualStyleBackColor = true;
+            TodayBtn.Click += TodayBtn_Click;
+            // 
+            // TomorrowBtn
+            // 
+            TomorrowBtn.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            TomorrowBtn.Location = new Point(143, 3);
+            TomorrowBtn.Name = "TomorrowBtn";
+            TomorrowBtn.Size = new Size(135, 40);
+            TomorrowBtn.TabIndex = 1;
+            TomorrowBtn.Text = "Tomorrow";
+            TomorrowBtn.TextAlign = ContentAlignment.MiddleLeft;
+            TomorrowBtn.UseVisualStyleBackColor = true;
+            TomorrowBtn.Click += TomorrowBtn_Click;
+            // 
+            // PastDueBtn
+            // 
+            PastDueBtn.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            PastDueBtn.Location = new Point(143, 53);
+            PastDueBtn.Name = "PastDueBtn";
+            PastDueBtn.Size = new Size(135, 40);
+            PastDueBtn.TabIndex = 2;
+            PastDueBtn.Text = "Past Due";
+            PastDueBtn.TextAlign = ContentAlignment.MiddleLeft;
+            PastDueBtn.UseVisualStyleBackColor = true;
+            PastDueBtn.Click += PastDueBtn_Click;
+            // 
+            // ThisWeekBtn
+            // 
+            ThisWeekBtn.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            ThisWeekBtn.Location = new Point(3, 53);
+            ThisWeekBtn.Name = "ThisWeekBtn";
+            ThisWeekBtn.Size = new Size(134, 40);
+            ThisWeekBtn.TabIndex = 4;
+            ThisWeekBtn.Text = "Week";
+            ThisWeekBtn.TextAlign = ContentAlignment.MiddleLeft;
+            ThisWeekBtn.UseVisualStyleBackColor = true;
+            ThisWeekBtn.Click += ThisWeekBtn_Click;
+            // 
+            // panel5
+            // 
+            panel5.BackColor = Color.FromArgb(64, 64, 64);
+            panel5.Controls.Add(label3);
+            panel5.Location = new Point(3, 147);
+            panel5.Name = "panel5";
+            panel5.Size = new Size(281, 32);
+            panel5.TabIndex = 7;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Dock = DockStyle.Left;
+            label3.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point);
+            label3.ForeColor = Color.White;
+            label3.Location = new Point(0, 0);
+            label3.Name = "label3";
+            label3.Size = new Size(132, 32);
+            label3.TabIndex = 0;
+            label3.Text = "Categories:";
+            // 
+            // CategoryAddTxtBox
+            // 
+            CategoryAddTxtBox.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            CategoryAddTxtBox.Location = new Point(3, 185);
+            CategoryAddTxtBox.Name = "CategoryAddTxtBox";
+            CategoryAddTxtBox.PlaceholderText = "Enter Category (Hit Enter to Add)";
+            CategoryAddTxtBox.Size = new Size(281, 29);
+            CategoryAddTxtBox.TabIndex = 8;
+            CategoryAddTxtBox.KeyPress += CategoryAddTxtBox_KeyPress;
+            // 
+            // CategoryListBox
+            // 
+            CategoryListBox.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            CategoryListBox.FormattingEnabled = true;
+            CategoryListBox.ItemHeight = 21;
+            CategoryListBox.Location = new Point(3, 220);
+            CategoryListBox.Name = "CategoryListBox";
+            CategoryListBox.Size = new Size(281, 109);
+            CategoryListBox.TabIndex = 9;
+            // 
+            // tableLayoutPanel1
+            // 
+            tableLayoutPanel1.ColumnCount = 2;
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanel1.Controls.Add(CategoryFilterBtn, 0, 0);
+            tableLayoutPanel1.Controls.Add(DeleteCategoryBtn, 1, 0);
+            tableLayoutPanel1.Location = new Point(3, 335);
+            tableLayoutPanel1.Name = "tableLayoutPanel1";
+            tableLayoutPanel1.RowCount = 1;
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel1.Size = new Size(281, 60);
+            tableLayoutPanel1.TabIndex = 10;
+            // 
+            // CategoryFilterBtn
+            // 
+            CategoryFilterBtn.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            CategoryFilterBtn.Location = new Point(3, 3);
+            CategoryFilterBtn.Name = "CategoryFilterBtn";
+            CategoryFilterBtn.Size = new Size(134, 52);
+            CategoryFilterBtn.TabIndex = 0;
+            CategoryFilterBtn.Text = "Filter By Category";
+            CategoryFilterBtn.UseVisualStyleBackColor = true;
+            CategoryFilterBtn.Click += CategoryFilterBtn_Click;
+            // 
+            // DeleteCategoryBtn
+            // 
+            DeleteCategoryBtn.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            DeleteCategoryBtn.Location = new Point(143, 3);
+            DeleteCategoryBtn.Name = "DeleteCategoryBtn";
+            DeleteCategoryBtn.Size = new Size(134, 52);
+            DeleteCategoryBtn.TabIndex = 1;
+            DeleteCategoryBtn.Text = "Delete Category";
+            DeleteCategoryBtn.UseVisualStyleBackColor = true;
+            DeleteCategoryBtn.Click += DeleteCategoryBtn_Click;
+            // 
+            // RemoveCategoryFilterBtn
+            // 
+            RemoveCategoryFilterBtn.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            RemoveCategoryFilterBtn.Location = new Point(3, 401);
+            RemoveCategoryFilterBtn.Name = "RemoveCategoryFilterBtn";
+            RemoveCategoryFilterBtn.Size = new Size(281, 52);
+            RemoveCategoryFilterBtn.TabIndex = 12;
+            RemoveCategoryFilterBtn.Text = "Remove Category Filter";
+            RemoveCategoryFilterBtn.UseVisualStyleBackColor = true;
+            RemoveCategoryFilterBtn.Click += RemoveCategoryFilterBtn_Click;
             // 
             // MainForm
             // 
@@ -302,6 +454,13 @@
             ((System.ComponentModel.ISupportInitialize)ToDoListView).EndInit();
             flowLayoutPanel1.ResumeLayout(false);
             flowLayoutPanel2.ResumeLayout(false);
+            flowLayoutPanel2.PerformLayout();
+            panel4.ResumeLayout(false);
+            panel4.PerformLayout();
+            tableLayoutPanel2.ResumeLayout(false);
+            panel5.ResumeLayout(false);
+            panel5.PerformLayout();
+            tableLayoutPanel1.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -316,16 +475,28 @@
         private FlowLayoutPanel flowLayoutPanel1;
         private Button AllBtn;
         private FlowLayoutPanel flowLayoutPanel2;
-        private Button button6;
-        private Button button7;
-        private Button button8;
+        private Button TodayBtn;
+        private Button TomorrowBtn;
+        private Button PastDueBtn;
         private Button CompletedBtn;
         private Button UncompletedBtn;
-        private Button button10;
+        private Button ThisWeekBtn;
         private Button AddItemBtn;
         private Button HighPriorityBtn;
         private Button MediumPriorityBtn;
         private Button LowPriorityBtn;
         private Button DeleteItemBtn;
+        private System.ComponentModel.BackgroundWorker backgroundWorker2;
+        private Panel panel4;
+        private Label label2;
+        private Panel panel5;
+        private Label label3;
+        private TextBox CategoryAddTxtBox;
+        private ListBox CategoryListBox;
+        private TableLayoutPanel tableLayoutPanel1;
+        private Button CategoryFilterBtn;
+        private TableLayoutPanel tableLayoutPanel2;
+        private Button DeleteCategoryBtn;
+        private Button RemoveCategoryFilterBtn;
     }
 }
