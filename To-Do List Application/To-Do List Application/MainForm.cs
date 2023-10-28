@@ -20,16 +20,6 @@ namespace To_Do_List_Application
         Priority currentPriority = Priority.None;
         Date dateSelected = Date.None;
 
-        /*
-        DateTime today = DateTime.Today;
-        DateTime tomorrow = DateTime.Today.AddDays(1);
-        DateTime twoDaysFromNow = DateTime.Today.AddDays(2);
-        DateTime threeDaysFromNow = DateTime.Today.AddDays(3);
-        DateTime fourDaysFromNow = DateTime.Today.AddDays(4);
-        DateTime fiveDaysFromNow = DateTime.Today.AddDays(5);
-        DateTime sixDaysFromNow = DateTime.Today.AddDays(6);
-        */
-
         public MainForm()
         {
             InitializeComponent();
@@ -108,27 +98,28 @@ namespace To_Do_List_Application
                     }
                     if (!hasDate)
                     {
+                        // Note: Had to add -5 hours to function to make it equal to EST
                         if (dateSelected == Date.Today)
                         {
-                            tableFilters += "DueDate = Date('now')";
+                            tableFilters += "DueDate = Date('now', '-5 hours')";
                             hasDate = true;
                             continue;
                         }
                         else if (dateSelected == Date.Tomorrow)
                         {
-                            tableFilters += "DueDate = Date('now', '+1 day')";
+                            tableFilters += "DueDate = Date('now', '+1 day', '-5 hours')";
                             hasDate = true;
                             continue;
                         }
                         else if (dateSelected == Date.ThisWeek)
                         {
-                            tableFilters += "DueDate BETWEEN Date('now') AND Date('now', '+5 day')";
+                            tableFilters += "DueDate BETWEEN Date('now') AND Date('now', '+5 day', '-5 hours')";
                             hasDate = true;
                             continue;
                         }
                         else if (dateSelected == Date.PastDue)
                         {
-                            tableFilters += "DueDate < Date('now')";
+                            tableFilters += "DueDate < Date('now', '-5 hours')";
                             hasDate = true;
                             continue;
                         }
